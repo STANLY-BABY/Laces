@@ -1,0 +1,36 @@
+<div class="bg-light">
+<div>
+
+<form action="/auth/send-otp" id="otp_form" method="post">
+                    <div class="form-group">
+                      <label for="Name">Enter phone number</label>
+                      <input type="text" name="phone" class="form-control" id="Name">
+                      <span id="error" class="text-danger"></span><br>
+                      <input class="btn btn_primary" value="Generat OTP" type="submit" ></form>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{!-- <script>
+  $("#otp_form").submit(function(e) {
+    e.preventDefault()
+  $.ajax({
+    url:"/auth/send-otp",
+    data: $("#otp_form").serialize(),
+    method: "POST",
+    success:function(data){
+      alert(data)
+      var now = new Date();
+        var time = now.getTime();
+        var expireTime = time + 1000 * 60 * 60 * 24 * 30;
+        now.setTime(expireTime);
+        document.cookie = `phone=${data};expires=${now.toUTCString()};path=/;`
+      location.href = "/auth/verify-otp"
+    }, error: function(err) {
+      $("#error").text(err.responseJSON)
+    }
+  })
+  })
+</script> --}}

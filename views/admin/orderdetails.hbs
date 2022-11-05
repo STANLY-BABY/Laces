@@ -1,0 +1,114 @@
+{{>adminheader}}
+{{>adminsidebar}}
+    {{#with data}}
+<section class="w-100">
+    <div class="content col-sm-9">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin/orders">Orders</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Order Details</li>
+      </ol>
+    </nav>
+    </div>
+    <br>
+    <h3 class="mb-5">Order Details</h3>
+<div class="container">
+  <div class="row">
+    
+    <div class="col-lg-4"><h5>{{orderAddress.[0].firstname}} {{orderAddress.[0].lastname}}</h5>
+      <div>{{orderAddress.[0].address}}, {{orderAddress.[0].city}}, {{orderAddress.[0].state}}, {{orderAddress.[0].pincode}}</div>
+      <div>{{orderAddress.[0].phonenumber}}</div>
+    </div>
+    <div class="col-lg-4"><h5>Payment Method</h5>
+      <div>{{paymentMethod}}</div>
+    </div>
+    <div class="col-lg-4"><h5>Payment Status</h5>
+      <div>{{paymentStatus}}</div>
+    </div>
+  </div>  
+</div>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    {{#each orderProduct}}
+    <div class="col-lg-6"><div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="/product_images/{{this._id}}-1.jpg" class="img-fluid rounded-start">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{this.name}}</h5>
+
+        {{!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    <div class="col-lg-2"><h5>Amount</h5>
+    ₹{{this.productDiscountPrice}}/-  ₹<del>{{this.price}}/-</del>
+    <br>
+    Quantity:{{products.productId.quantity}}
+    </div>
+               
+    {{/each}}
+  </div>
+</div>
+<br>
+<select name="status" class="dropdown" id="status{{_id}}" onchange="changeStatus('{{_id}}')">
+                             <option selected>
+                              {{orderStatus}}
+                            </option>
+                            <option value="Order Placed">Order placed</option>
+                            <option value="Dispatched">Dispatched</option>
+                            <option value="On Transist">On Transist</option>
+                            <option value="Out for Delivery">Out for Delivery</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+<h3>Order Summary</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6"><h6>MRP</h6>
+    <div><h6>Discount</h6></div>
+    <div><h6>Shipping</h6></div>
+    <div><h6>Coupon Applied</h6></div>
+    <div><h6>Total</h6></div>
+    </div>
+    <div class="col-lg-6">
+      <div><h6>₹{{sub_total}}/-</h6></div>
+      <div><h6>-₹{{totalDiscount}}/-</h6></div>
+      <div><h6>Free</h6></div>
+      <div><h6>-₹{{couponDiscount}}/-</h6></div>
+      <div><h6>₹{{totalAmount}}/-</h6></div>
+    </div>
+  </div>
+</div>
+</section>
+    {{/with}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+function changeStatus(orderId) {
+  console.log(orderId);
+  let val = $(`#status${orderId}`).val();
+  console.log(val);
+  $.ajax({
+    type: "POST",
+    url: "/admin/order/changeStatus",
+    data: {
+      orderId: orderId,
+      status: val,
+    },
+    success: function(data) {
+      console.log('success')
+      $(`#${orderId}`).text(val)
+    },
+    error: function(error) {
+      console.log(error)
+    }
+  })
+}
+</script>

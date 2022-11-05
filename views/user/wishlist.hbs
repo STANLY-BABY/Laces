@@ -1,0 +1,75 @@
+{{>userheader}}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/products">Products</a></li>
+    <li class="breadcrumb-item active" aria-current="page">wishlist</li>
+  </ol>
+</nav>
+<div class="container-fluid">
+
+ <h2 style="margin:60px ;">MY WISHLIST</h2>
+</div>
+
+<div class="container mx-auto mt-4">
+    <div class="row" style="">
+      {{#each data.wishlist}}
+        <div class=" col-lg-4  col-md-6 col-sm-6 col-6 g-4">
+            <div class="card h-100 " style="width: 18rem;">
+           <a href="/productView/{{this._id}}">
+                <img src="/product_images/{{this._id}}-1.jpg" class="card-img-top" alt="...">
+            </a>
+                <div class="card-body" >
+                 
+                  <p>{{this.brand}}</p>
+                    <h6 class="card-title">{{this.name}}</h6> 
+                    <p class="card-text">₹{{this.price}}/-</p>
+                       <button onclick="addToCart('{{this._id}}')" class="btn btn-dark">Add to Bag</button></a>
+                           <a href="/wishlist/remove/{{this._id}}"><button class="btn btn-outline-dark">Remove</button></a> 
+                </div>
+            </div>
+        </div>
+{{/each}}    
+</div>
+ </div>
+{{>userfooter}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    crossorigin="anonymous" >
+  </script>
+<script >
+  function addToCart(productId) {
+    toastr.options = {
+      "closeButton": true,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    $.ajax({
+      url: `/add-to-cart/${productId}`,
+      method: "get",
+      success: function(data) {
+        toastr.success('Successfully added to the Cart')
+
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+  }
+
+  </script>

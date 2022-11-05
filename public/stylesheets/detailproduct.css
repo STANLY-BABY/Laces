@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.mainimage{
+    margin-top: 2px;
+}
+.small-img-row{
+    display: flex;
+    justify-content: space-between;
+
+}
+.small-img-col{
+    flex-basis: 30%;
+    cursor: pointer;
+    margin-left: 25px;
+    margin-right: 8px;
+}
+.pics{
+    display: flex;
+    flex-direction: row;
+}
+.rightBtn{
+    color: black;
+    background-color: white;
+    border-radius: 6px;
+    width: 100px;
+    align-items: center;
+    font-weight: 600;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.leftBtn{
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    border-radius: 6px;
+    align-items: center;
+    font-weight: 400;
+    height: 40px;
+    font-size: 1rem;
+    width: 100px;
+}
+.productname{
+    font-size: 1.38rem;
+    font-weight: 400;
+}
+.productdis{
+    width: 80%;
+}
+.bottom{
+    display: flex;
+    flex-direction: column;
+}
+.size{
+    width: 100px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.sidebaruser{
+        margin: 10px;
+    padding: 0;
+    width: 200px;
+    background-color: #ffffff;
+    height: 100%;
+    overflow: auto;
+    height: 100%;
+    
+}
+/* test */
+.image-container {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .thumbnail-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .thumb {
+    margin-bottom: 5px;
+    width: 80px;
+    height: 50px;
+  }
+  
+  .thumb:hover {
+    -moz-box-shadow: 0 0 5px orange;
+    -webkit-box-shadow: 0 0 5px orange;
+    box-shadow: 0 0 5px orange;
+  }
+  
+  .preview {
+    display: none;
+    margin-left: 15px;
+    width: 640px;
+    height: 400px;
+    border: 3px solid orange;
+  }
+  
+  .cursor-overlay {
+    display: none;
+    background-color: rgba(0, 150, 50, 0.5);
+    position: fixed;
+    pointer-events: none;
+  }
+
+  .toast-message{
+    color: #fff ;
+    background: #20c997;
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+  }
+  
+  .toast-success{
+    background: #20c997;
+  }
+
+
+
+
+  

@@ -1,0 +1,68 @@
+{{>userheader}}
+<link rel="stylesheet" href="/stylesheets/address.css" />
+         
+<div class="left-form">
+<div  style="width:100vh;">
+      <div class="container">
+        <div class="forms">
+          <div class="form login">
+            {{#each data}}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{firstname}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+{{/each}}
+<br>
+<div>
+  <div class="col-md-12 mb-3">
+    <button type="submit" class="btn btn-primary">Save & Continue</button>
+         </div>
+         <div class="col-md-12 mb-3"><button type="submit" >Cancel</button></div>
+</div>
+
+        <div class="divider my-3 border-bottom border-secondary"></div>
+        </div>
+      </div>
+      </div>
+</div>
+
+</div>
+
+<form class="row g-3" method="post" id="checkout-form">
+    <div class="col-md-6 mb-4 "><button type="button" class="btn btn-dark px-5">NEW ADDRESS</button></div>
+  <div class="col-md-6 mn-4" ><button type="button" class="btn btn-outline-dark px-5">SAVED ADDRESS</button></div>
+  <div class="col-md-6 mb-3">
+    <input required type="text" class="form-control" id="firstName" name="firstname" placeholder="First Name">
+  </div>
+  <div class="col-md-6 mb-3">
+    <input required type="text" class="form-control" name="lastname" id="lastName" placeholder="Last Name">
+  </div>
+  <div class="col-12 mb-3">
+    <input required type="text" class="form-control" name="address" id="address" placeholder="Address">
+  </div>
+  <div class="col-md-4 mb-3">
+    <input required type="text" class="form-control" id="city" name="city" placeholder="City">
+  </div>
+  <div class="col-md-4 mb-3">
+    <input required type="text" class="form-control" id="state" name="state" placeholder="State" >
+  </div>
+  <div class="col-md-4 mb-3">
+    <input required type="number" class="form-control" id="pincode" name="pincode" placeholder="Pin code">
+  </div>
+    <div class="col-md-6 mb-3">
+    <input required type="text" class="form-control" id="email" name="email" placeholder="Email" >
+  </div>
+  <div class="col-md-6 mb-3">
+    <input required type="number" class="form-control" name="phonenumber" id="phonenumber" placeholder="Phone Number">
+  </div>
+  <div class="col-md-6 mb-3">
+    <button type="submit" class="btn btn-primary">Save & Continue</button>
+         </div>
+         <div class="col-md-6 mb-3 "><button type="submit" class="btn btn-danger">Cancel</button></div>
+        <div class="divider my-3 border-bottom border-secondary"></div>
+</form>

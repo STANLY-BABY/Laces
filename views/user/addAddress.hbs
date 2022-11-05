@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="container">
+    <form action="" id="checkout-form" method="post" class="loginBox">
+      <div class="d-flex">
+        <input
+          required
+          type="text"
+          class="w-100 p-2 m-2 form-control"
+          name="firstname"
+          placeholder="First Name"
+        />
+          <input
+          required
+          type="text"
+          class="w-100 p-2 m-2 form-control"
+          name="lastname"
+          placeholder="Last Name"
+        />
+        <input
+          required
+          type="text"
+          class="w-100 p-2 m-2 form-control"
+          name="address"
+          placeholder="Address"
+        />
+        <input
+          required
+          type="number"
+          class="w-100 p-2 m-2 form-control"
+          name="pincode"
+          placeholder="Pincode"
+        />
+        <div class="d-flex">
+        <select class="form-select w-100 p-2 m-2" name="state">
+          <option selected>State</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+        </select>
+        <input
+          required
+          type="text"
+          class="w-100 p-2 m-2 form-control"
+          name="city"
+          placeholder="City"
+        />
+      </div>
+
+       <input
+          required
+          type="text"
+          class="w-100 p-2 m-2 form-control"
+          name="email"
+          placeholder="Gmail"
+        />
+        <input
+          required
+          type="number"
+          class="w-100 p-2 m-2 form-control"
+          name="phonenumber"
+          placeholder="Phone"
+        />
+      </div>
+      </div>
+      <div class="d-flex mt-2">
+        <input required type="reset" class="btn btn-danger p-2 m-2 w-100" />
+        <input
+          required
+          type="submit"
+          value="Save"
+          class="btn btn-success p-2 m-2 w-100"
+        />
+      </div>
+    </form>
+  </div>
+<script>
+ $('#checkout-form').submit(function(e) {
+  e.preventDefault();
+  console.log('submit');
+  console.log($('#checkout-form').serialize());
+  $.ajax({
+    url: '/address/add',
+    type: 'POST',
+    data: $('#checkout-form').serialize(),
+    success: function(data) {
+      console.log('success');
+      window.location.href = "/";
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  })
+})
+</script>

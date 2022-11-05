@@ -1,0 +1,43 @@
+<div class="container height-100 d-flex justify-content-center align-items-center"> 
+  <div class="position-relative">
+     <div class="card p-2 text-center"> 
+
+<form action="" id="verify_otp_form" method="post">
+  <div class="form-group">
+    <label for="Name">Enter otp</label>
+    <input type="text" name="otp" class="form-control" id="otp">
+    <span id="error" class="text-danger"></span>
+    <input class="btn btn_primary" value="Enter OTP" type="submit">
+  </div>
+</form>
+</div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  $("#verify_otp_form").submit(function (event) {
+    event.preventDefault()
+    $.ajax({
+      url: "/auth/verify-otp",
+      data: $("#verify_otp_form").serialize(),
+      method: "POST",
+      success: function (data) {
+        console.log("data",data)
+        //aler(data)
+        var now = new Date();
+        var time = now.getTime();
+        var expireTime = time + 1000 * 60 * 60 * 24 * 30;
+        now.setTime(expireTime);
+        document.cookie = `token=${data.token};expires=${now.toUTCString()};path=/;`
+        document.cookie = `user=${JSON.stringify(data.user_details)};expires=${now.toUTCString()};path=/;`
+        location.href = "/"
+      },
+      error: function (error) {
+        $("#error").text(error.responseJSON)
+      }
+    })
+  })
+</script>

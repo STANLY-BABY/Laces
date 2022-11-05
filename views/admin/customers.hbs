@@ -1,0 +1,47 @@
+{{>adminheader}}
+{{>adminsidebar}}
+<session class="w-100">
+  <div class="content col-sm-9">
+    {{! Show Path }}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Account</li>
+      </ol>
+    </nav></div>
+
+  <div class="container-fluid">
+    <div class="row w-100">
+      <div class="heading d-flex justify-content-between w-100">
+        <h2>Customers List</h2>
+      </div>
+    </div>
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Customer Name</th>
+           <th scope="col">Phone Number</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+      {{#each data}}
+        <tbody>
+          <tr>
+            <th scope="row">{{inc @key}}</th>
+            <td>{{this.name}}</td>>
+            <td>{{this.phone}}</td>>
+            <td> 
+            {{#if this.isAllowed}}
+              <a href="/admin/allowUser/{{this._id}}" onclick="return confirm('Are you Sure you want to block {{this.name}}')"><button class="btn btn-dark">Block</button></a>
+              {{else}}
+              <a href="/admin/allowUser/{{this._id}}" onclick="return confirm('Are you Sure you want to unblock {{this.name}}')"><button class="btn btn-light">Unblock</button></a>
+              {{/if}}
+              </td>
+          </tr>
+        </tbody>
+      {{/each}}
+    </table>
+  </div>
+
+</session>

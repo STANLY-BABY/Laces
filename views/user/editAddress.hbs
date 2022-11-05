@@ -1,0 +1,36 @@
+
+
+{{#with data}}
+<form class="row g-3" action="/editAddress/{{this._id}}" method="post" id="checkout-form">
+  <div class="col-md-6 mb-3">
+    <input required type="text" class="form-control" id="firstName" name="firstname" value="{{this.firstname}}">
+  </div>
+  <div class="col-md-6 mb-3">
+    <input required type="text" class="form-control" name="lastname" id="lastName" value="{{this.lastname}}">
+  </div>
+  <div class="col-12 mb-3">
+    <input required type="text" class="form-control" name="address" id="address" value="{{this.address}}">
+  </div>
+  <div class="col-md-4 mb-3">
+    <input required type="text" class="form-control" id="city" name="city" value="{{this.city}}">
+  </div>
+  <div class="col-md-4 mb-3">
+    <input required type="text" class="form-control" id="state" name="state" value="{{this.state}}" >
+  </div>
+  <div class="col-md-4 mb-3">
+    <input required type="number" class="form-control" id="pincode" name="pincode" value="{{this.pincode}}">
+  </div>
+    <div class="col-md-6 mb-3">
+    <input required type="text" class="form-control" id="email" name="email" value="{{this.email}}" >
+  </div>
+  <div class="col-md-6 mb-3">
+    <input required type="number" class="form-control" name="phonenumber" id="phonenumber" value="{{this.phonenumber}}">
+  </div>
+  <div class="col-md-6 mb-3">
+    <button type="submit" class="btn btn-primary">Save & Continue</button>
+         </div>
+         <div class="col-md-6 mb-3 "><button type="submit" class="btn btn-danger">Cancel</button></div>
+        <div class="divider my-3 border-bottom border-secondary"></div>
+</form>
+
+      {{/with}}

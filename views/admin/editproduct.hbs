@@ -1,0 +1,107 @@
+{{>adminheader}}
+{{>adminsidebar}}
+<link rel="stylesheet" href="/stylesheets/addproduct .css" />
+<div class="content col-sm-9">
+  {{! Show Path }}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/admin/products">Products</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit Products</li>
+    </ol>
+  </nav>
+  <span class="mainTitle" style="mr-2">Edit Product Details</span>
+  {{! product details }}
+  {{#with product}}
+  <div class="add_products container-fluid">
+  <div class="add_product_left me-2">
+  <form action="/admin/editProduct/{{this._id}}" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="">Product Name</label>
+      <input class="form-control" type="text" name="Name" value="{{this.name}}" />
+    </div>
+    <label for="">Brand</label>
+    <select class="form-select mb-1" type="text" name="brands">
+      <option selected>{{this.brand}}</option>
+      <option value="Nike">Nike</option>
+      <option value="Adidas">Adidas</option>
+      <option value="Puma">Puma</option>
+      <option value="Reebok">Reebok</option>
+    </select>
+    <label for="">Category</label>
+    <select class="form-select mb-1" type="text" name="category">
+      <option selected>{{this.category}}</option>
+      <option value="Sneaker">Sneaker</option>
+      <option value="Classic">Classic</option>
+      <option value="Basketball">Basketball</option>
+    </select>
+    <div class="mb-3">
+      <label for="">Description</label>
+      <input class="form-control" style="height: 150px" type="text" name="description" value="{{this.description}}" />
+    </div>
+    {{!-- <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea> --}}
+    </div>
+    <div class="add_product_right">
+    {{! image uploader }}
+    <p>Product Image</p>
+    <div class="drop-box-main">
+      <div class="drop-zone">
+        <span class="drop-zone__prompt">Drop file here or click to upload </span>
+        <input type="file" name="image" class="drop-zone__input" placeholder="{{this._id}}.jpg" />
+      </div>
+
+      {{!-- <div class="drop-box-mid">  
+        <div class="drop-box-small">
+          <div class="drop-zone-small">
+            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+            <input type="file" name="image2" class="drop-zone__input" />
+          </div>
+          <div class="drop-zone-small">
+            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+            <input type="file" name="image3" class="drop-zone__input" />
+          </div>
+          <div class="drop-zone-small">
+            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+            <input type="file" name="image4" class="drop-zone__input" />
+          </div>
+        </div>
+
+
+        </div>
+         </div>  --}}
+
+
+         
+    </div>
+<div class="container">
+  <div class="row">
+        <div class="mb-3 col-xl-4">
+      <label for="">Stocks</label>
+      <input class="form-control" type="number" name="Stock" value="{{this.stocks}}"/>
+    </div>
+     <div class="mb-3 col-xl-4">
+      <label for="">Discount</label>
+      <input class="form-control" type="number" name="productDiscount" value="{{this.productDiscount}}"/>
+    </div>
+    <div class="mb-3 col-xl-4">
+      <label for="">MRP</label>
+      <input class="form-control" type="text" name="Price" value="{{this.price}}"/>
+    </div>
+  </div>
+</div>
+
+    {{/with}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+    </div>
+  </div>
+  <script src="/javascripts/addproducts.js"></script>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"
+  integrity="sha512-ooSWpxJsiXe6t4+PPjCgYmVfr1NS5QXJACcR/FPpsdm6kqG1FmQ2SVyg2RXeVuCRBLr0lWHnWJP6Zs1Efvxzww=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+  integrity="sha512-0SPWAwpC/17yYyZ/4HSllgaK7/gg9OlVozq8K7rf3J8LvCjYEEIfzzpnA2/SSjpGIunCSD18r3UhvDcu/xncWA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+

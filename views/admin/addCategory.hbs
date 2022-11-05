@@ -1,0 +1,31 @@
+{{>adminheader}}
+<link rel="stylesheet" href="/stylesheets/addproduct .css" />
+<div class="content col-sm-9">
+  {{! Show Path }}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/admin/products">Products</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add Products</li>
+    </ol>
+  </nav>
+  <span class="mainTitle" style="mr-2">Add Category</span>
+  {{! product details }}
+  <div class="add_products container-fluid">
+  <div class="add_product_left me-2">
+  <form action="/admin/addCategory" method="post">
+    <div class="mb-3">
+      <label for="">Category Name</label>
+      <input class="form-control" type="text" name="category" />
+    </div>
+    <div class="mb-3">
+      <label for="">Category Description</label>
+      <input class="form-control" type="text" name="categoryDescription" />
+    </div>
+     <div class="mb-3">
+      <label for="">Discount</label>
+      <input class="form-control" type="number" name="categoryDiscount" />
+    </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+    </div>

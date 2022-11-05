@@ -1,0 +1,115 @@
+{{>userheader}}
+{{>userProfileSidebar}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/stylesheets/orderpage.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<section class="w-100">
+    <div class="content col-sm-9">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="">Orders</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Order Details</li>
+      </ol>
+    </nav>
+    </div>
+    <br>
+    <h3 class="mb-5">Your Orders</h3>
+<div class="container">
+  <div class="row">
+      {{#each data}}
+    <div>
+<div class="card text-dark bg-light mb-3" style="max-width: 50rem;">
+  <div class="card-header">
+ <div class="d-flex justify-content-between">
+  <div class="left d-flex">
+   <div class="d-flex flex-column me-4">
+  <div class=" bd-highlight">Total</div>
+  <div class=" bd-highlight">₹{{this.sub_total}}</div>
+</div>
+   <div class="d-flex flex-column">
+  <div class=" bd-highlight">Ship To</div>
+  <div class=" bd-highlight">
+   <div class="dropdown"><button class="dropbtn">{{orderAddress.[0].firstname}}</button>
+  <div class="dropdown-content">
+    <a href="#">{{orderAddress.[0].firstname}} {{orderAddress.[0].lastname}}</h5>
+      <div>{{orderAddress.[0].address}}, {{orderAddress.[0].city}}, {{orderAddress.[0].state}}, {{orderAddress.[0].pincode}}</div>
+      <div>{{orderAddress.[0].phonenumber}}</div></a>
+  </div>
+  </div>
+</div>
+  </div>
+ </div>
+<div class="right d-flex flex-column">
+  <div class=" bd-highlight">Order Id:</div>
+  <div class=" bd-highlight">{{_id}}</div>
+</div>
+</div>
+</div>
+  <div class="card-body col-md-4">
+      <div class="d-flex flex-column">
+  <div class="d-flex">
+   <h5> {{this.orderStatus}}</h5>
+  </div>
+  {{#each orderProduct}}
+  <div class="d-flex">
+<img src="/product_images/{{this._id}}-1.jpg" class="img-fluid rounded-start">
+<div class="d-flex flex-column">
+<h6 style="width: 30vw;"><a href="/productView/{{this._id}}">{{this.name}}</a></h6>
+<div>
+<button onclick="addToCart('{{this._id}}')" class="btn btn-outline-dark">Shop Again</button></a>
+</div>
+</div>
+
+  </div>
+   {{/each}}
+   <p class="card-text"><a href="orders/cancel/{{this._id}}"><button class="btn btn-outline-dark"><i class="bi bi-x"></i> Cancel</button></a> </p>
+</div>
+  </div>
+</div>
+    </div>
+{{/each}}
+  </div>
+</div>
+
+
+
+
+
+</section>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script >
+  function addToCart(productId) {
+    toastr.options = {
+      "closeButton": true,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    $.ajax({
+      url: `/add-to-cart/${productId}`,
+      method: "get",
+      success: function(data) {
+        toastr.success('Successfully added to the Cart')
+
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+  }
+
+  </script>

@@ -1,0 +1,70 @@
+{{>userheader}}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb ms-5">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Address</li>
+    </ol>
+  </nav>
+  <br>
+
+{{>userProfileSidebar}}
+
+               <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <h3>SAVED ADDRESS</h3>
+  {{#each data}}
+                  <div class="card border- mb-3" style="width: 70%;">
+                      <div class="d-flex">
+                        <input type="radio" name="address" class="me-5" value="{{this._id}}">
+                        <div>
+                          <div>{{this.firstname}}{{this.lastname}}</div>
+                          <div>{{this.address}},{{this.city}},</div>
+                          <div>{{this.state}},{{this.pincode}}</div>
+                          <div>{{this.phonenumber}}</div>
+                          <a href="/editAddress/{{this._id}}">edit</a>
+                        </div>
+                      </div>
+                  </div>
+                  {{/each}}
+                  </div>
+                  <div class="col">
+                  <div id="new_address_div">
+                  <div  class="d-flex flex-wrap">
+                  <form action="" id="checkout-form" method="post">
+                  <div class="col-md-6 mb-3">
+                    <input required type="text" class="form-control" id="firstName" name="firstname"
+                      placeholder="First Name">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <input required type="text" class="form-control" name="lastname" id="lastName"
+                      placeholder="Last Name">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <input required type="text" class="form-control" name="address" id="address" placeholder="Address">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <input required type="text" class="form-control" id="city" name="city" placeholder="City">
+                  </div>
+                  <div class="col-md-4 mb-3 ">
+                    <input required type="text" class="form-control" id="state" name="state" placeholder="State">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <input required type="number" class="form-control" id="pincode" name="pincode"
+                      placeholder="Pin code">
+                  </div>
+                  <div class="col-md-6 mb-3 ">
+                    <input required type="text" class="form-control" id="email" name="email" placeholder="Email">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <input required type="number" class="form-control" name="phonenumber" id="phonenumber"
+                      placeholder="Phone Number">
+                  </div>
+                  <input type="submit" class="btn btn-primary ms-auto" value="submit">
+                </form>
+              </div>
+              </div>
+
+                  </div>
+                </div>
+               </div>

@@ -1,0 +1,40 @@
+{{>userheader}}
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb ms-5">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Account Details</li>
+    </ol>
+  </nav>
+  <br>
+
+{{>userProfileSidebar}}
+<div>
+<h4 class="ms-5">My Account</h4>
+<div class="d-flex justify-content-between shadow p-3 mb-5 bg-body rounded m-5" >
+ <div class="h-1"><h6>Username</h6>
+ <h6>Email</h6>
+ <h6>Mobile Number</h6>
+ <h6>Referal Code</h6>
+ <h6>Wallet Amount</h6>  
+ </div>
+ <div class="">
+        {{#with data}}
+    <div><h6>:  {{name}}</h6></div>
+    <div><h6>:  {{email}}</h6></div>
+    <div><h6>:  {{phone}}</h6></div>
+    <div><h6 style="color: red;">:  {{referalCode}}</h6></div>
+    <div><h6>:  ₹{{wallet}}/-</h6></div>
+        {{/with}}
+ </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <form action="">
+      
+    </form>
+  </div>
+</div>

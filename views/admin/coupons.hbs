@@ -1,0 +1,48 @@
+{{>adminheader}}
+{{>adminsidebar}}
+<session class="w-100">
+  <div class="content col-sm-9">
+    {{! Show Path }}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Coupons</li>
+      </ol>
+    </nav></div>
+
+  <div class="container-fluid">
+    <div class="row w-100">
+      <div class="heading d-flex justify-content-between w-100">
+        <h2>Coupons</h2>
+        <a href="/admin/addCoupons"><button class="blackBtn" mb-3>Add Coupons</button></a>
+      </div>
+    </div>
+    <table class="table table-borderless">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th>Coupon Name</th>
+          <th>Coupon Description</th>
+          <th>Coupon Code</th>
+          <th>Discount</th>
+          <th>Min Amount</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      {{#each data}}
+        <tbody>
+          <tr>
+            <th scope="row">{{inc @key}}</th>
+            <td>{{this.couponName}}</td>
+            <td>{{this.couponDesc}}</td>
+            <td>{{this.couponCode}}</td>
+            <td>₹{{this.couponDiscount}}/-</td>
+            <td>₹{{this.minAmount}}</td>
+            <td><a href="/admin/deleteCoupons/{{this._id}}"><button class="deletebtn btn btn-dark">Delete</button></a></td>
+          </tr>
+        </tbody>
+      {{/each}}
+    </table>
+  </div>
+
+</session>

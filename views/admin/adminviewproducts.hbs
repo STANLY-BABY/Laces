@@ -1,0 +1,72 @@
+{{>adminheader}}
+{{>adminsidebar}}
+
+<link
+rel="stylesheet"
+href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"/>
+<session class="w-100">
+  <div class="content col-sm-9">
+    {{! Show Path }}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Account</li>
+      </ol>
+    </nav></div>
+
+  <div class="container-fluid">
+    <div class="row w-100">
+      <div class="heading d-flex justify-content-between w-100">
+        <h2>Product List</h2>
+        <a href="/admin/addproduct"><button class="blackBtn mb-3">Add Products</button></a>
+      </div>
+
+    </div>
+
+    <table class="table table-borderless mt-2" id="table_id">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Category</th>
+          {{! <th scope="col">Date</th> }}
+          <th scope="col">MRP</th>
+          {{! <th scope="col">Final Price</th> }}
+          <th scope="col">Stocks</th>
+          <th scope="col">Discount</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+        <tbody>
+      {{#each data}}
+          <tr>
+            <th scope="row">{{inc @key}}</th>
+            <td><img
+                style="width: 5rem; height: 5rem;"
+                src="/product_images/{{this._id}}-1.jpg"
+              /></td>
+            <td>{{this.name}}</td>
+            <td>{{this.brand}}</td>
+            <td>{{this.category}}</td>
+            {{!-- <td>{{this.date}}</td> --}}
+            <td>{{this.price}}</td>
+            <td>{{this.stocks}}</td>
+            <td>{{this.productDiscount}}%</td>
+            <td> <a href="/admin/editProduct/{{this._id}}"><button class="editbtn btn btn-outline-dark">Edit</button></a>
+              <a href="/admin/deleteProduct/{{this._id}}"><button class="deletebtn btn btn-dark">Delete</button></a></td>
+          </tr>
+      {{/each}}
+        </tbody>
+    </table>
+  </div>
+
+</session>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#table_id').DataTable();
+});
+</script>

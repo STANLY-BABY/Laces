@@ -1,0 +1,39 @@
+{{>adminheader}}
+<link rel="stylesheet" href="/stylesheets/addproduct .css" />
+<div class="content col-sm-9">
+  {{! Show Path }}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="">Coupons</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add Coupon</li>
+    </ol>
+  </nav>
+  <span class="mainTitle" style="mr-2">Add Coupon</span>
+  {{! product details }}
+  <div class="add_products container-fluid">
+  <div class="add_product_left me-2">
+  <form action="/admin/addCoupons" method="post">
+    <div class="mb-3">
+      <label for="">Coupons Name</label>
+      <input class="form-control" type="text" name="couponName" />
+    </div>
+    <div class="mb-3">
+      <label for="">Coupons Description</label>
+      <input class="form-control" type="text" name="couponDesc" />
+    </div>
+     <div class="mb-3">
+      <label for="">Coupon Code</label>
+      <input class="form-control" type="text" name="couponCode" />
+    </div>
+    <div class="mb-3">
+      <label for="">Coupon Discount</label>
+      <input class="form-control" type="number" name="couponDiscount" />
+    </div>
+    <div class="mb-3">
+      <label for="">Min Amount</label>
+      <input type="number" class="form-control" name="minAmount">
+    </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+    </div>

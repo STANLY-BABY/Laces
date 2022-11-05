@@ -1,0 +1,33 @@
+#galleryImages, #cropper{
+    width: 100%;
+    float: left;
+  }
+  canvas{
+    max-width: 100%;
+    display: inline-block;
+  }
+  #cropperImg{
+    max-width: 0;
+    max-height: 0;
+  }
+  #cropImageBtn{
+    display: none;
+  }
+  img{
+    width: 100%;
+  }
+  .img-preview{
+    float: left;
+  }
+  .singleImageCanvasContainer{
+    max-width: 300px;
+    display: inline-block;
+    position: relative;
+    margin: 2px;
+  }
+  .singleImageCanvasCloseBtn{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  

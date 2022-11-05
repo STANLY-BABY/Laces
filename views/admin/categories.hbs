@@ -1,0 +1,58 @@
+{{>adminheader}}
+{{>adminsidebar}}
+<link
+rel="stylesheet"
+href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"/>
+<session class="w-100">
+  <div class="content col-sm-9">
+    {{! Show Path }}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Account</li>
+      </ol>
+    </nav></div>
+
+  <div class="container-fluid">
+    <div class="row w-100">
+      <div class="heading d-flex justify-content-between w-100">
+        <h2>Categories List</h2>
+        <a href="/admin/addCategory"><button class="blackBtn" mb-3>Add Categories</button></a>
+      </div>
+
+    </div>
+    <table class="table table-borderless" id="table_id">
+      
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Category</th>
+          <th scope="col">Category Description</th>
+          <th scope="col">Discount</th>
+          <th scope="col">Options</th>
+        </tr>
+      </thead>
+        <tbody>
+      {{#each categories}}
+          <tr>
+            <th scope="row">{{inc @key}}</th>
+            <td>{{this.category}}</td>
+            <td>{{this.categoryDescription}}</td>
+            <td>{{this.categoryDiscount}}%</td>
+            <td> <a href="/admin/editCategory/{{this._id}}"><button class="editbtn btn btn-outline-dark">Edit</button></a>
+              <a href="/admin/deleteCategory/{{this._id}}"><button class="deletebtn btn btn-dark">Delete</button></a></td>
+          </tr>
+      {{/each}}
+        </tbody>
+    </table>
+  </div>
+
+</session>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function () {
+
+    $('#table_id').DataTable();
+});
+</script>

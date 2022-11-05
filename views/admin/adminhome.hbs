@@ -1,0 +1,285 @@
+{{>adminheader}}
+{{>adminsidebar}}
+<link rel="stylesheet" href="/stylesheets/adminhome.css">
+<div class="content col-sm-9">
+    {{!-- Show Path --}}
+    <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+  </ol>
+</nav>
+
+  <div class="p-4">
+
+    <section class="statistics mt-4">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="box d-flex shadow p-3 mb-5 bg-white rounded align-items-center mb-4 mb-lg-0 p-3">
+            <i class="uil-envelope-shield fs-2 text-center bg-primary rounded-circle"></i>
+            <div class="ms-3">
+              <div class="d-flex align-items-center">
+                <h3 class="mb-0">{{total}}</h3> <span class="d-block ms-2">Total Sales</span>
+              </div>
+              <p class="fs-normal mb-0"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="box d-flex shadow p-3 mb-5 bg-white rounded align-items-center mb-4 mb-lg-0 p-3">
+            <i class=" fs-2 text-center bg-danger rounded-circle"></i>
+            <div class="ms-3">
+              <div class="d-flex align-items-center">
+                <h3 class="mb-0">{{user}}</h3> <span class="d-block ms-2">Users</span>
+              </div>
+              <p class="fs-normal mb-0"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="box d-flex shadow p-3 mb-5 bg-white rounded align-items-center p-3">
+            <i class="uil-users-alt fs-2 text-center bg-success rounded-circle"></i>
+            <div class="ms-3">
+              <div class="d-flex align-items-center">
+                <h3 class="mb-0">{{totalamount}}</h3> <span class="d-block ms-2">Amount</span>
+              </div>
+              <p class="fs-normal mb-0"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="charts mt-4">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="chart-container rounded-2 p-3">
+            <h3 class="fs-6 mb-3">Daily Sales</h3>
+            <canvas id="day"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-container rounded-2 p-3">
+            <h3 class="fs-6 mb-3">Weekly Sales</h3>
+            <canvas id="week"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+ <section class="charts mt-4">
+      <div class="chart-container p-3">
+        <h3 class="fs-6 mb-3">Monthly Sales</h3>
+        <div>
+          <canvas id="month" width="100%"></canvas>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="d-flex">
+<div style="width: 50%;">
+      <h3>Sales Report</h3>
+      <canvas id="myChart" style="width:50%;"></canvas>
+      </div>
+
+ <div style="width: 50%;">
+      <h3>Sales Report</h3>
+      <canvas id="status" style="width:50%;"></canvas>
+      </div>
+      </div>
+    
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script> 
+  $(document).ready(function() { 
+   $.ajax({ 
+     url: `/admin/stats/day`, 
+     method: "GET", 
+     success: function(response) { 
+       var xValues =response.date; 
+       var yValues = response.totalAmount; 
+       new Chart("day", { 
+         type: "line", 
+         data: { 
+           labels: xValues, 
+           datasets: [{ 
+             fill: false, 
+             lineTension: 0, 
+             label: 'Sales', 
+             backgroundColor: 'rgb(255, 99, 132)', 
+             borderColor: 'rgb(255, 99, 132)', 
+             data: yValues 
+           }] 
+         }, 
+         options: { 
+           legend: { 
+             display: false 
+           }, 
+           scales: { 
+             yAxes: [{ 
+               ticks: { 
+                 min: 6, 
+                 max: 16 
+               } 
+             }], 
+           } 
+         } 
+       }); 
+     }, 
+     error: function(err) { 
+       console.log(err); 
+     } 
+   }) 
+})
+</script>
+
+<script> 
+  $(document).ready(function() { 
+   $.ajax({ 
+     url: `/admin/stats/week`, 
+     method: "GET", 
+     success: function(response) { 
+       var xValues =response.date; 
+       var yValues = response.totalAmount; 
+       new Chart("week", { 
+         type: "line", 
+         data: { 
+           labels: xValues, 
+           datasets: [{ 
+             fill: false, 
+             lineTension: 0, 
+             label: 'Sales', 
+             backgroundColor: 'rgb(255, 99, 132)', 
+             borderColor: 'rgb(255, 99, 132)', 
+             data: yValues 
+           }] 
+         }, 
+         options: { 
+           legend: { 
+             display: false 
+           }, 
+           scales: { 
+             yAxes: [{ 
+               ticks: { 
+                 min: 6, 
+                 max: 16 
+               } 
+             }], 
+           } 
+         } 
+       }); 
+     }, 
+     error: function(err) { 
+       console.log(err); 
+     } 
+   }) 
+})
+</script>
+
+
+<script> 
+  $(document).ready(function() { 
+   $.ajax({ 
+     url: `/admin/stats/month`, 
+     method: "GET", 
+     success: function(response) {  
+       var xValues =response.date; 
+       var yValues = response.totalAmount; 
+       new Chart("month", { 
+         type: "line", 
+         data: { 
+           labels: xValues, 
+           datasets: [{ 
+             fill: false, 
+             lineTension: 0, 
+             label: 'Sales', 
+             backgroundColor: 'rgb(255, 99, 132)', 
+             borderColor: 'rgb(255, 99, 132)', 
+             data: yValues 
+           }] 
+         }, 
+         options: { 
+           legend: { 
+             display: false 
+           }, 
+           scales: { 
+             yAxes: [{ 
+               ticks: { 
+                 min: 6, 
+                 max: 16 
+               } 
+             }], 
+           } 
+         } 
+       }); 
+     }, 
+     error: function(err) { 
+       console.log(err); 
+     } 
+   }) 
+})
+</script>
+
+<script>
+   $(document).ready(function() { 
+   $.ajax({ 
+     url: `/admin/stats/sales`, 
+     method: "GET", 
+     success: function(response) { 
+
+var xValues = response.paymentMethod;
+var yValues = response.totalAmount;
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  }
+});
+ }
+       })
+   })
+</script>
+
+<script>
+   $(document).ready(function() { 
+    console.log("sdaasdsadasdadsad")
+   $.ajax({ 
+     url: `/admin/stats/saleStatus`, 
+     method: "GET", 
+     success: function(response) { 
+       console.log("sales",response);
+var xValues = response.orderStatus;
+var yValues = response.count;
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+new Chart("status", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  }
+});
+ }
+       })
+   })
+</script>

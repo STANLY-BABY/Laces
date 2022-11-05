@@ -1,0 +1,11 @@
+h1{
+    font-size: 4rem;
+    font-weight: 700;
+}
+.banner-content h1{
+    font-size: 3.7rem;
+    font-weight: 700;
+}
+.banner-content{
+    margin-top:100px ;
+}

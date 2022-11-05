@@ -1,0 +1,154 @@
+<link rel="stylesheet" href="/stylesheets/detailproduct.css">
+
+{{>userheader}}
+<session class="w-100">
+<link rel="stylesheet" href="/stylesheets/detailproduct.css">
+<div class="d-flex ms-3">
+  <div class="sidebaruser border-end- col-sm-3">
+        <h6 class="text-uppercase font-weight-bold mb-3">SEARCH & FILTER</h6>
+    <h6 class="text-uppercase font-weight-bold ">Filter by Categories</h6>
+    {{#each category}}
+    <div class="mt-2 mb-2 pl-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="category" />
+        <label class="custom-control-label" for="category">{{this.category}}</label>
+      </div>
+    </div>
+    {{/each}}
+    <div class="divider my-3 border-bottom border-secondary"></div>
+    <h6 class="text-uppercase font-weight-bold m">Filter by Brands</h6>
+    <div class="mt-2 mb-2 pl-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="category-1" />
+        <label class="custom-control-label" for="category-1">Nike</label>
+      </div>
+    </div>
+    <div class="mt-2 mb-2 pl-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="category-2" />
+        <label class="custom-control-label" for="category-2">Reebok </label>
+      </div>
+    </div>
+    <div class="mt-2 mb-2 pl-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="category-3" />
+        <label class="custom-control-label" for="category-3">Adidas</label>
+      </div>
+    </div>
+       <div class="mt-2 mb-2 pl-2">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="category-3" />
+        <label class="custom-control-label" for="category-3">Puma</label>
+      </div>
+    </div>
+    
+    <div class="divider my-3 border-bottom border-secondary"></div>
+
+    
+    
+    <a href="#" class="btn btn-md btn-block btn-dark ">Apply Filters</a>
+  </div>
+
+<div class="content col-sm-9">
+  {{! Show Path }}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Products</li>
+    </ol>
+  </nav>
+
+</section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-12">
+            <div
+              class="dropdown mb-3 mt-3 mt-md-0 mb-md-0"
+            >
+              <label class="mr-2">Sort by:</label>
+              <a
+                class="btn btn-lg btn-light dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >Relevance <span class="caret"></span></a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdown"
+                x-placement="bottom-start"
+                style="position: absolute; transform: translate3d(71px, 48px, 0px); top: 0px; left: 0px; will-change: transform;"
+              >
+                <a class="dropdown-item" href="#">Relevance</a>
+                <a class="dropdown-item" href="#">latest</a>
+                <a class="dropdown-item" href="#">Price Ascending</a>
+                <a class="dropdown-item" href="#">Best Selling</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+<div class="container mx-auto mt-4">
+  <div class="row">
+      {{#each data}}
+        <div class="col-6 col-sm-6 col-md-6 mb-4 col-lg-4 g-4">
+            <div class="card h-100"  style="width: 18rem;">
+           <a href="/productView/{{this._id}}">
+                <img src="/product_images/{{this._id}}-1.jpg" class="card-img-top" alt="...">
+            </a>
+                <div class="card-body" >
+                 
+                  <p>{{this.brand}}</p>
+                    <h6 class="card-title">{{this.name}}</h6> 
+                 <div class="d-flex">
+            <div>
+              <h5 class="mt-2">₹{{this.productDiscountPrice}}/-</h5>
+            </div>
+            <div class="d-flex">
+              <del class="m-auto ps-3"> ₹{{this.price}}/-</del>
+            </div>
+          </div>
+                </div>
+            </div> 
+        </div>
+{{/each}}    
+</div>
+</div>
+  {{!-- // --}}
+    </div>
+</div>
+</div>
+{{!-- lastline --}}
+        
+      </div>
+    </div>
+  </div>
+</div>
+<script >
+  //Get the button
+  let mybutton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (
+    document.body.scrollTop > 20 ||
+    document.documentElement.scrollTop > 20
+  ) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+// When the user clicks on the button, scroll to the top of the document
+mybutton.addEventListener("click", backToTop);
+
+function backToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+} 
+</script>

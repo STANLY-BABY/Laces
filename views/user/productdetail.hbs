@@ -1,0 +1,197 @@
+{{>userheader}}
+<link rel="stylesheet" href="/stylesheets/detailproduct.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{#with data}}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/products">Products</a></li>
+      <li
+        class="breadcrumb-item active"
+        aria-current="page"
+      >{{this.category}}</li>
+      <li class="breadcrumb-item active" aria-current="page">{{this.name}}</li>
+    </ol>
+  </nav>
+
+  <div class="small-container mainimage">
+    <div class="row" style="width: 100%;">
+      <div class="col-6 pics">
+        <div class="small-img-row">
+          <div class="small-img-col">
+            <img
+              src="/product_images/{{this._id}}-1.jpg"
+              width="100%"
+              alt=""
+              class="smallimg"
+            />
+            <img
+              src="/product_images/{{this._id}}-2.jpg"
+              width="100%"
+              alt=""
+              class="smallimg"
+            />
+            <img
+              src="/product_images/{{this._id}}-3.jpg"
+              width="100%"
+              alt=""
+              class="smallimg"
+            />
+            <img
+              src="/product_images/{{this._id}}-4.jpg"
+              width="100%"
+              alt=""
+              class="smallimg"
+            />
+          </div>
+          <div>
+
+            <img
+              src="/product_images/{{this._id}}-2.jpg"
+              width="96%"
+              alt=""
+              class="productimg"
+              id="productimg"
+            />
+          </div>
+
+        </div>
+      </div>
+      <div class="col-6">
+        <p>{{this.brand}}</p>
+        <span class="productname">{{this.name}}</span>
+        <div class="productdis">
+          <span>{{this.description}}</span>
+        </div>
+        <div class="bottom">
+          <div class="d-flex">
+            <div>
+              <h3 class="mt-2">₹{{this.productDiscountPrice}}/-</h3>
+            </div>
+            <div class="d-flex">
+              <del class="m-auto ps-3"> ₹{{this.price}}/-</del>
+            </div>
+          </div>
+        </div>
+        {{!-- <select name="" class="size" id="">
+          <option value="">Size</option>
+          <option value="">7</option>
+          <option value="">8</option>
+          <option value="">9</option>
+        </select> --}}
+        <br>
+  
+      
+        <button onclick="addToCart('{{this._id}}')" class="leftBtn" mb-3>Add to Bag</button></a>
+      <button onclick="addwishlist('{{this._id}}')" class="rightBtn" mb-3>
+        Wishlist</button>
+      </div>
+    </div>
+  </div>
+
+{{/with}}
+  {{! /* javascript */ }}
+  <script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+    crossorigin="anonymous"
+  >
+  </script>
+
+  <script src="/javascripts/zoom.js"></script>
+
+  <script>
+    $(document).ready(function () { $("#productimg").imagezoomsl() })
+  </script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <!-- Core theme JS-->
+  <script src="/javascripts/productjs.js"></script>
+
+ <script >
+
+  var productimg = document.getElementById("productimg");
+var smallimg = document.getElementsByClassName('smallimg');
+ smallimg[0].onclick = function() {
+  productimg.src = smallimg[0].src;
+}
+smallimg[1].onclick = function() {
+  productimg.src = smallimg[1].src;
+}
+smallimg[2].onclick = function() {
+  productimg.src = smallimg[2].src;
+}
+smallimg[3].onclick = function() {
+    productimg.src = smallimg[3].src;
+  } 
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script >
+  function addwishlist(productId) {
+    toastr.options = {
+      "closeButton": true,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    $.ajax({
+      url: "/wishlist/add",
+      method: "POST",
+      data: {
+        productId: productId
+      },
+      success: function(data) {
+        toastr.success('Successfully added to the Wishlist')
+
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+  }
+  </script>
+  <script >
+  function addToCart(productId) {
+    toastr.options = {
+      "closeButton": true,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+    $.ajax({
+      url: `/add-to-cart/${productId}`,
+      method: "get",
+      success: function(data) {
+        toastr.success('Successfully added to the Cart')
+
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+  }
+
+  </script>

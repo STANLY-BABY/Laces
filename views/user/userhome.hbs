@@ -1,0 +1,118 @@
+{{>userheader}}
+ <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+
+    <link rel="stylesheet" href="/stylesheets/userhome.css">
+    <body >
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {{#each banner}}
+        <div class="swiper-slide img-fluid"><img src="/product_images/{{this._id}}.jpg" class="card-img-top img-fluid" alt="..."></div>
+        {{/each}}
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+<h4 style="margin:60px ;">NEW ARRIVALS</h4>
+
+
+
+
+<div class="container mx-auto mt-4">
+  <div class="row ">
+    {{#each products}}
+      <div class="col-6 col-sm-6 col-md-6 mb-4 col-lg-3">
+          <div class="card h-100" style="width: 18rem;">
+         <a href="/productView/{{this._id}}">
+              <img src="/product_images/{{this._id}}-1.jpg" class="card-img-top img-fluid" alt="...">
+          </a>
+              <div class="card-body" >
+                  <h6 class="card-title">{{this.name}}</h6> 
+                  <p class="card-text">₹{{this.price}}/-</p>
+              </div>
+          </div>
+      </div>
+    {{/each}}    
+  </div>
+</div>
+
+
+  <h4 style="margin:60px ;">TOP BRANDS</h4>
+  {{!-- ////hover --}}
+<div class="hover01 container">
+  <div class="row">
+  <div  class="col-6 col-sm-6 col-md-6 mb-4 col-lg-3 shadow p-3 mb-5 bg-white rounded" style="width: 18rem;" >
+    <figure class=" d-flex justify-content-center"><img style="width: 8rem;" class="img img-fluid" src="/images/Adidas_Logo.svg.png" /></figure>
+  </div>
+  <div class="col-6 col-sm-6 col-md-6 mb-4 col-lg-3 shadow p-3 mb-5 bg-white rounded">
+    <figure class="d-flex justify-content-center"><img  style="width: 8rem;" class="img img-fluid" src="/images/Fila-Logo.png" /></figure>
+  </div>
+  <div  class="col-6 col-sm-6 col-md-6 mb-4 col-lg-3 shadow p-3 mb-5 bg-white rounded">
+    <figure class="d-flex justify-content-center"><img style="width: 8rem;" class="img img-fluid" src="/images/logo-puma-black.png" /></figure>
+  </div>
+   <div class="col-6 col-sm-6 col-md-6 mb-4 col-lg-3 shadow p-3 mb-5 bg-white rounded ">
+    <figure class="d-flex justify-content-center"><img  style="width: 11rem;" class="img img-fluid" src="/images/reeboklogo.png" /></figure>
+  </div>
+  </div>
+</div>
+{{!-- //end --}}
+
+<h4 style="margin:60px ;">SPECIAL OFFEERS</h4>
+<div class="row">
+  <div class="column">
+    <img src="/product_images/banner2.jpg" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="/product_images/dsa.jpg" style="width:100%">
+  </div>
+</div>
+<h4 style="margin:60px ;">Popular Products</h4>
+<div class=" container mx-auto mt-4">
+    <div class="row ">
+      {{#each products}}
+        <div class="col-6 col-sm-6 col-md-6 mb-4 col-lg-3">
+            <div class="card h-100" style="width: 18rem;">
+           <a href="/productView/{{this._id}}">
+                <img src="/product_images/{{this._id}}-1.jpg" class="card-img-top img-fluid" alt="...">
+            </a>
+                <div class="card-body" >
+                    <h6 class="card-title">{{this.name}}</h6> 
+                    <p class="card-text">₹{{this.price}}/-</p>
+                </div>
+            </div>
+        </div>
+{{/each}}    
+</div>
+  </div>
+    </body>
+<!-- Footer -->
+{{>userfooter}}
+
+<script src="script.js"> let interval = 2000;</script>
+

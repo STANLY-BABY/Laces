@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.maindiv {
+    display: flex;
+    justify-content: space-around;
+}
+
+.mainTitle {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-left: 60px;
+}
+
+.container .form .title {
+    position: relative;
+    font-size: 1.625rem;
+    font-weight: 600;
+}
+
+.form .inputField {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputField input {
+    height: 40px;
+    width: 400px;
+    padding-left: 10px;
+
+}
+
+a {
+    text-decoration: none;
+    color: gray;
+}
+
+.blackBtn {
+    margin-top: 20px;
+    color: white;
+    background-color: black;
+    border-radius: 6px;
+    width: 400px;
+    text-align: center;
+    font-weight: 600;
+    height: 40px;
+    font-size: 1.30rem;
+
+}
+.rightBtn{
+  color: black;
+  background-color: white;
+  border-radius: 6px;
+  align-items: center;
+  width: 400px;
+  font-weight: 600;
+  height: 40px;
+  font-size: 1rem;
+}
+.googlebtn {
+    font-size: 1.30rem;
+    margin-top: 20px;
+    color: white;
+    background-color: #007BFF;
+    border-radius: 6px;
+    width: 400px;
+    text-align: center;
+    font-weight: 400;
+    height: 40px;
+    font-size: 1.30rem;
+    padding-top: 2px;
+    border-width: 0ch;
+
+}
+
+.google img {
+    margin-top: -2px;
+    width: 36px;
+    height: 36px;
+    border-radius: 2px;
+}
+
+
+/* navbar css */
+
+.navbar {
+    background: black;
+}
+
+.navbar image {
+    width: 40px;
+    height: 40px;
+}
+
+
+
+
+
+
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #ffffff;
+    height: 100vh;
+    overflow: auto;
+    
+  }
+  
+  /* Sidebar links */
+  .sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+  
+  /* Active/current link */
+  .sidebar a.active {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-size: 1.350rem;
+  }
+  
+  /* Links on mouse-over */
+  .sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+  
+  /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+  div.content {
+    /* margin-left: 200px;   */
+    padding: 1px 16px;
+ 
+  }
+  
+  /* On screens that are less than 700px wide, make the sidebar into a topbar */
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+
+
+
+
+          .search form {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 1s;
+            width: 30px;
+            height: 30px;
+            background: white;
+            box-sizing: border-box;
+            border-radius: 25px;
+            border: 4px solid white;
+            padding: 5px;
+            box-shadow: 0px 0px 15px #AE4B4B;
+        }
+        
+       .search input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            ;
+            height: 42.5px;
+            line-height: 30px;
+            outline: 0;
+            border: 0;
+            display: none;
+            font-size: 1em;
+            border-radius: 20px;
+            padding: 0 20px;
+        }
+        
+        .fa {
+            box-sizing: border-box;
+            padding: 10px;
+            width: 42.5px;
+            height: 42.5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 50%;
+            color: #B92C2C;
+            text-align: center;
+            font-size: 1.2em;
+            transition: all 1s;
+        }
+        
+       .search form:hover {
+            width: 200px;
+            cursor: pointer;
+        }
+        
+       .search form:hover input {
+            display: block;
+        }
+        
+       .search form:hover .fa {
+            background: #B92C2C;
+            color: white;
+        }

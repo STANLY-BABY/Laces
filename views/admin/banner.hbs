@@ -1,0 +1,19 @@
+{{>adminheader}}
+{{>adminsidebar}}
+<div class="container">
+  <div class="row">
+{{#each data}}
+    <div class="col-lg-4">
+<div class="card" style="width: 18rem;">
+  <img src="/product_images/{{this._id}}.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    
+   <div><a href="/admin/deleteBanner/{{this._id}}"><button class="deletebtn btn btn-dark">Delete</button></a></div>
+  </div>
+</div>
+    </div>
+{{/each}}
+  </div>
+</div>
+
+<a href="/admin/addBanner"><button class="blackBtn" mb-3>Add</button></a>

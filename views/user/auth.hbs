@@ -1,0 +1,135 @@
+<link rel="stylesheet" href="/stylesheets/userSignin.css" />
+{{>userheader}}
+
+
+<div class="content col-sm-9">
+  {{!-- Show Path --}}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">My Account</li>
+    </ol>
+  </nav>
+
+  <span class="mainTitle">My Account</span>
+  <div class="maindiv">
+    {{! signin }}
+    <div>
+      <div class="container">
+        <div class="form">
+          <div class="form login">
+            <span class="title">Sign In</span>
+            <form action="" id="login_form" method="post">
+              <div class="inputField" style="">
+                <span class="font">Email</span>
+                <input type="text" name="email" placeholder="" required />
+              </div>
+              <div class="inputField">
+                <span class="font">Password</span>
+                <input type="password" name="password" placeholder="" required />
+              </div>
+
+              <span><a href="#" class="float-end mt-2">Forgot Password</a></span>
+              <br>
+              <span id="login_error" class="text-danger"></span>
+              <button class="blackBtn">Signin</button>
+              <br>
+              <span class="d-flex justify-content-center ">or</span>
+              <br>
+
+            </form>
+              <a href="auth/otp"><button class="rightBtn">Signin with OTP</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{! Signup }}
+    <div>
+      <div class="container">
+        <div class="forms">
+          <div class="form login">
+            <span class="title">Signup</span>
+            <form action="" id="signup_form" method="post">
+              <div class="inputField" style="">
+                <span class="font">Full Name</span>
+                <input type="text" name="name" placeholder="" required />
+              </div>
+              <div class="inputField" style="">
+                <span class="font">Email ID</span>
+                <input type="text" name="email" placeholder="" required />
+              </div>
+              <div class="inputField" style="">
+                <span class="font">Phone Number</span>
+                <input type="tel" name="phone" placeholder="" minlength="10" required />
+              </div>
+              <div class="inputField" style="">
+                <span class="font">Referal Code</span>
+                <input type="tel" name="referalCode" minlength="7"  placeholder="" />
+              </div>
+              <div class="inputField">
+                <span class="font">Password</span>
+                <input type="password" name="password" minlength="8" placeholder="" required />
+              </div>
+              <div class="inputField">
+                <span class="font">Confirm Password</span>
+                <input type="password" name="confirm_password" minlength="8" placeholder="" required />
+              </div>
+              <span class="text-danger" id="signup_error"></span>
+              <button class="blackBtn" type="submit">Signup</button>
+              <br>
+              <span class="d-flex justify-content-center mt-3">OR</span>
+              <div class="google">
+                <button class="googlebtn"><img class="google float-start" src="/images/google.png" alt="">Signin with
+                  Google</button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+<script>
+  $("#login_form").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: "/auth/login",
+      data: $("#login_form").serialize(),
+      method: "POST",
+      success: function (data) {
+      var now = new Date(); 
+        var time =now.getTime(); 
+        var expireTime =time+1000 * 60 * 60 * 24 * 30 ;
+        now.setTime(expireTime); 
+        document.cookie=`token=${data.token};expires=${now.toUTCString()};path=/;`
+        document.cookie=`user=${JSON.stringify(data.user_details)};expires=${now.toUTCString()};path=/;`
+        location.href = "/"
+      },
+      error: function (err) {
+        //err = jQuery.parseJSON(err.responseText)
+        $("#login_error").text(err.responseJSON)
+      }
+    })
+  })
+  $("#signup_form").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: "/auth/signup",
+      data: $("#signup_form").serialize(),
+      method: "POST",
+      success: function (data) {
+        location.reload()
+      },
+      error: function (err) {
+        err = jQuery.parseJSON(err.responseText)
+        $("#signup_error").text(err)
+      }
+    })
+  })
+</script>

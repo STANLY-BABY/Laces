@@ -1,0 +1,332 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+{{>userheader}}
+<link rel="stylesheet" href="/stylesheets/address.css" />
+<div class="title">
+  <h2>CHECKOUT</h2>
+</div>
+
+<div class="container">
+  <div class="left-form">
+    <div class="container">
+      <div class="row g-3">
+      
+        <div style="width:100vh;">
+          <div class="forms">
+            <div class="form login">
+              <h2>Delivery Options</h2>
+              <div class="d-flex">
+                <div class="col-md-6 mn-4"><button type="button" class="btn btn-outline-dark px-5"
+                  id="saved_address">SAVED
+                  ADDRESS</button></div>
+              <div class="col-md-6 mb-4 "><button type="button" class="btn btn-dark px-5" id="new_address">NEW
+                  ADDRESS</button></div>
+              </div>
+
+
+              <div id="new_address_div">
+                <div  class="d-flex flex-wrap">
+                <form action="" id="checkout-form" method="post">
+                  <div class="col-md-6 mb-3">
+                    <input required type="text" class="form-control" id="firstName" name="firstname"
+                      placeholder="First Name">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <input required type="text" class="form-control" name="lastname" id="lastName"
+                      placeholder="Last Name">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <input required type="text" class="form-control" name="address" id="address" placeholder="Address">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <input required type="text" class="form-control" id="city" name="city" placeholder="City">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <input required type="text" class="form-control" id="state" name="state" placeholder="State">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <input required type="number" class="form-control" id="pincode" name="pincode"
+                      placeholder="Pin code">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <input required type="text" class="form-control" id="email" name="email" placeholder="Email">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <input required type="number" class="form-control" name="phonenumber" id="phonenumber"
+                      placeholder="Phone Number">
+                  </div>
+                  <input type="submit" class="btn btn-primary ms-auto" value="submit">
+                </form>
+              </div>
+              </div>
+
+
+            <form class="row g-3" method="post" id="place_order_form">
+              <div class="container">
+                <div class="row" id="saved_address_view">
+                  {{#each address}}
+                  <div class="card border- mb-3" style="width: 70%;">
+                    <div class="col-md-4 col-lg-4 col-xl-4">
+                      <div class="d-flex">
+                        <input type="radio" name="address" class="me-5" value="{{this._id}}">
+                        <div>
+                          <div>{{this.firstname}} {{this.lastname}}</div>
+                          <div>{{this.address}}, {{this.city}},</div>
+                          <div>{{this.state}}, {{this.pincode}}</div>
+                          <div>{{this.phonenumber}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {{/each}}
+                </div>
+              </div>
+
+
+              <div  id="submit_btn_row">
+                <div class="d-flex">
+                <div class="col-md-6 mb-3">
+                <button type="submit" class="btn btn-primary" id="submit_button">Save & Continue</button>
+              </div>
+              <div class="col-md-6 mb-3 "><button type="submit" class="btn btn-danger">Cancel</button></div>
+              </div>
+              </div>
+              <div class="divider my-3 border-bottom border-secondary"></div>
+            </div>
+            <div>
+              <h3>Payment</h3>
+              <p>Billing Country/Region India</p>
+              <h5>Select Payment Method</h5>
+              <div class="form-check">
+                <input required class="form-check-input" type="radio" name="payment_method" value="cash_on_delivery">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Cash on Delivery
+                </label>
+                <br>
+                <input required class="form-check-input" type="radio" name="payment_method" value="razor_pay">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Razor Pay
+                </label>
+                <br>
+                <input required class="form-check-input" type="radio" name="payment_method" id="paypal_radio_btn"
+                  value="paypal">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Paypal
+                </label>
+                <!-- Set up a container element for the button -->
+                <div id="paypal-button-container"></div>
+              </div>
+
+              <div class="divider my-3 border-bottom border-secondary"></div>
+
+            </div>
+      </form>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="inBag">
+      <div>
+        <h2>In Your Bag</h2>
+        <p>Discount</p>
+        <p>Estimated Shipping</p>
+        <p>Total</p>
+      </div>
+      <div>
+        <a href="">
+          <p>Edit</p>
+        </a>
+        <p>₹{{total_discount}}</p>
+        <p>₹0/-</p>
+        <p>₹{{total}}/-</p>
+      </div>
+    </div>
+    <div>
+      {{#each data}}
+      <div class="card mb-2" style="max-width: 400px;">
+        <div class="row g-0">
+          <div class="col-md-6">
+            <img src="/product_images/{{this.product._id}}.jpg" class="img-fluid rounded-start" alt="...">
+  
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <a href="" style="">
+
+                <p class="card-title">
+                  {{this.product.brand}}
+                </p>
+                <p class="card-text">
+                  {{this.product.name}}
+                </p>
+                <p class="card-text">
+                  {{this.product.price}}
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $("#new_address_div").hide();
+  $("#new_address").click(function () {
+    $("#saved_address_view").hide();
+    $("#submit_btn_row").hide();
+    $("#new_address_div").show();
+  })
+  $("#saved_address").click(function () {
+    $("#saved_address_view").show();
+    $("#new_address_div").hide();
+    $("#submit_btn_row").show();
+  })
+   $('#checkout-form').submit(function(e) {
+  e.preventDefault();
+  console.log('submit');
+  console.log($('#checkout-form').serialize());
+  $.ajax({
+    url: '/address/add',
+    type: 'POST',
+    data: $('#checkout-form').serialize(),
+    success: function(data) {
+      console.log('success');
+      window.location.reload()
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  }) 
+})
+</script>
+
+<script>
+  $('#place_order_form').submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: '/place-order',
+      method: 'post',
+      data: $('#place_order_form').serialize(),
+      success: (response) => {
+        console.log(response)
+        if (response.method === "cash_on_delivery" || response.method === "paypal") {
+          console.log("status here")
+          //location.href='/order-success'
+          Swal.fire(
+            'Good job!',
+            'Order placed successfully!',
+            'success'
+          ).then((data) => {
+            if(data.isConfirmed) location.href ='/'
+            else location.href ='/'
+          })
+        } else {
+          console.log("failed")
+          razorpayPayment(response)
+        }
+      }
+    })
+  })
+
+  function razorpayPayment(order) {
+    console.log("hoooooo")
+    console.log("hereo", order)
+    var options = {
+      "key": "rzp_test_Pfz2F7IixpeiKd", // Enter the Key ID generated from the Dashboard
+      "amount": order
+        .amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "LACES",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+        verifyPayment(response, order)
+      },
+      "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+
+  function verifyPayment(payment, order) {
+    $.ajax({
+      url: '/verify-payment',
+      data: {
+        payment,
+        order
+      },
+      method: 'post',
+      success: function (response) {
+        if (response.status) {
+          location.href = '/home'
+        } else {
+          alert('Payment Failed')
+        }
+      }
+    })
+  }
+</script>
+<script
+  src="https://www.paypal.com/sdk/js?client-id=AePs0eUa6aoSXHqfrrp0_Y_4PMGoIdAdMMRb5l6FksfeMtylsB5rs9ZQKxZK50Ce-YFxw5qwsg-YRzXa&currency=USD"
+  data-namespace="paypal_sdk"></script>
+<script>
+  paypal_sdk
+    .Buttons({
+      // Sets up the transaction when a payment button is clicked
+      createOrder: function (data, actions) {
+        return fetch("/api/orders", {
+            method: "post",
+            // use the "body" param to optionally pass additional order information
+            // like product ids or amount
+          })
+          .then((response) => response.json())
+          .then((order) => order.id);
+      },
+      // Finalize the transaction after payer approval
+      onApprove: function (data, actions) {
+        return fetch(`/api/orders/${data.orderID}/capture`, {
+            method: "post",
+          })
+          .then((response) => response.json())
+          .then((orderData) => {
+            // Successful capture! For dev/demo purposes:
+            console.log(
+              "Capture result",
+              orderData,
+              JSON.stringify(orderData, null, 2)
+            );
+            var transaction =
+              orderData.purchase_units[0].payments.captures[0];
+            $("#paypal_radio_btn").click();
+            $("#submit_button").click();
+            // When ready to go live, remove the alert and show a success message within this page. For example:
+            // var element = document.getElementById('paypal-button-container');
+            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+            // Or go to another URL:  actions.redirect('thank_you.html');
+          });
+      },
+    })
+    .render("#paypal-button-container");
+</script>
