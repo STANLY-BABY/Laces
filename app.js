@@ -12,8 +12,9 @@ const hbs = require('express-handlebars');
 const handlebars = require('handlebars')
 const mongoose = require('mongoose');
 const sessions=require('express-session');
+require('dotenv').config
 var app = express();
-mongoose.connect('mongodb://127.0.0.1:27017/lace')
+mongoose.connect(`mongodb+srv://stanlybaby:${process.env.MONGO_PASSWORD}@cluster0.qtvdyvg.mongodb.net/laces?retryWrites=true&w=majority`)
 mongoose.connection.on("error", err => {
   console.log("err", err)
 })

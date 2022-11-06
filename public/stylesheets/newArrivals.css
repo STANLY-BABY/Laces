@@ -1,47 +1,32 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
-* {
-  box-sizing: border-box;
+.container{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: auto auto auto auto auto auto;
+  padding: 10px;
 }
 
-body {
-  background-color: #efedd6;
-  font-family: "Roboto", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  overflow-x: hidden;
+.container span{
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0;
+  padding: 20px;
 }
 
-h1 {
-  margin: 10px;
+.container span:nth-of-type(1){
+  grid-area: 1 / 1 / span 6 / span 6;
 }
 
-.box {
-  background-color: steelblue;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 400px;
-  height: 200px;
-  margin: 10px;
-  border-radius: 10px;
-  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3);
-  transform: translateX(400%);
-  transition: transform 0.4s ease;
+.container span:nth-of-type(2){
+  grid-area: 7 / 1 / span 1 / span 2;
 }
 
-.box:nth-of-type(even) {
-  transform: translateX(-400%);
+.container span:nth-of-type(3){
+  grid-area: 7 / 3 / span 1 / span 2;
 }
 
-.box.show {
-  transform: translateX(0);
+.container span:nth-of-type(4){
+  grid-area: 8 / 1 / span 2 / span 4;
 }
 
-.box h2 {
-  font-size: 45px;
+.container span:nth-of-type(5){
+  grid-area: 7 / 5 / span 3 / span 2;
 }

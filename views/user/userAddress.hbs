@@ -28,41 +28,47 @@
                   </div>
                   {{/each}}
                   </div>
-                  <div class="col">
-                  <div id="new_address_div">
-                  <div  class="d-flex flex-wrap">
+                  <div class="col" id="new_address_div">
+                    <h3>NEW ADDRESS</h3>
                   <form action="" id="checkout-form" method="post">
-                  <div class="col-md-6 mb-3">
+                  <div class="row">
+                    <div class="col mb-3">
                     <input required type="text" class="form-control" id="firstName" name="firstname"
                       placeholder="First Name">
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div class="col mb-3">
                     <input required type="text" class="form-control" name="lastname" id="lastName"
                       placeholder="Last Name">
                   </div>
+                  </div>
+                
                   <div class="col-12 mb-3">
                     <input required type="text" class="form-control" name="address" id="address" placeholder="Address">
                   </div>
-                  <div class="col-md-4 mb-3">
+                  <div class="row">
+                    <div class="col mb-3">
                     <input required type="text" class="form-control" id="city" name="city" placeholder="City">
                   </div>
-                  <div class="col-md-4 mb-3 ">
+                  <div class="col mb-3 ">
                     <input required type="text" class="form-control" id="state" name="state" placeholder="State">
                   </div>
-                  <div class="col-md-4 mb-3">
+                  <div class="col mb-3">
                     <input required type="number" class="form-control" id="pincode" name="pincode"
                       placeholder="Pin code">
                   </div>
-                  <div class="col-md-6 mb-3 ">
+                  </div>
+                 <div class="row">
+                  <div class="col mb-3 ">
                     <input required type="text" class="form-control" id="email" name="email" placeholder="Email">
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div class="col mb-3">
                     <input required type="number" class="form-control" name="phonenumber" id="phonenumber"
-                      placeholder="Phone Number">
+                      placeholder="Phone Number" minlength="10" >
                   </div>
+                 </div>
                   <input type="submit" class="btn btn-primary ms-auto" value="submit">
                 </form>
-              </div>
+          
               </div>
 
                   </div>

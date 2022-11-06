@@ -285,34 +285,7 @@ date:new Date(),
     })
 
   },
-  // createSavedAddress: (body,id) => {
-  //   console.log(id);
-  //   console.log("body",body);
-  //   return new Promise((resolve, reject) => {
-  //       const {
-  //     firstname,
-  //     lastname,
-  //     address,
-  //     city,
-  //     state,
-  //     pincode,
-  //     email,
-  //     phonenumber,
-  //   } = body;
-  //   console.log("first",firstname);
-  //   address_model.create({
-  //       userId:id,
-  //     firstname: firstname,
-  //     lastname: lastname,
-  //     address: address,
-  //     city: city,
-  //     state: state,
-  //     pincode: pincode,
-  //     email: email,
-  //     phonenumber: phonenumber,
-  //   }).then(()=>resolve())    
-  //   })
-  // },
+  
 showOrderAddress:()=>{
 return new Promise((resolve, reject) => {
   orderaddress_model
@@ -349,6 +322,34 @@ return new Promise((resolve, reject) => {
   })
 })
 },
+  createSavedAddress: (body,id) => {
+    console.log("asdfasdf", body, id);
+    return new Promise((resolve, reject) => {
+        const {
+      firstname,
+      lastname,
+      address,
+      city,
+      state,
+      pincode,
+      email,
+      phonenumber,
+    } = body;
+    address_model.create({
+        userId:id,
+      firstname: firstname,
+      lastname: lastname,
+      address: address,
+      city: city,
+      state: state,
+      pincode: pincode,
+      email: email,
+      phonenumber: phonenumber,
+    }).then((data)=>{
+      console.log(data)
+      resolve(data)})    
+    })
+  },
 postEditSavedAddress:(_id,body)=>{
 console.log(_id,body);
 const {firstname,lastname,address,city,state,pincode,email,phonenumber}=body

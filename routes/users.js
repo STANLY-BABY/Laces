@@ -380,7 +380,6 @@ router.get('/address',verifyLogin,(req,res)=>{
 router.get('/editAddress/:id',verifyLogin,(req,res)=>{
   let user =req.cookies.user ? JSON.parse(req.cookies.user) : null;
   getEditSavedAddress(req.params.id).then((data)=>{
-    console.log("data",data);
     res.render("user/editAddress",{
       data:data,
       user:user,

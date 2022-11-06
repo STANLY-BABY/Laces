@@ -4,7 +4,6 @@ var express = require("express");
 const jwt = require("jsonwebtoken");
 const { token } = require("morgan");
 const session = require("express-session");
-const { done } = require("express-hbs/lib/resolver");
 const createHttpError = require("http-errors");
 const { Promise, Types } = require("mongoose");
 const { resolve } = require("path");
