@@ -101,7 +101,7 @@
   <div class="card-header text-center fs-3 fw-bold text-white bg-secondary "> <div class="textToBeCopied">{{couponCode}}</div></div>
   <div class="card-body">
     <h5 class="card-title">{{couponDesc}}</h5>
-    <p class="card-text">Maximum discount of ₹{{couponDiscount}}/-.</p>
+    <p class="card-text">Min Amount of ₹{{minAmount}} required.</p>
     <input type="text" value="{{couponCode}}" hidden id="textToBeCopied-{{couponCode}}">
     <button class="copyButton" id="copyButton" onclick="copyToClipboard('{{couponCode}}')">Copy</button>
   </div>
@@ -180,6 +180,9 @@
  </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
 <script
     src="https://code.jquery.com/jquery-1.12.4.min.js"
     integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"

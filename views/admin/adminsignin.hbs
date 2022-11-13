@@ -15,24 +15,48 @@
         <div class="form">
           <div class="form login">
             <img src="/images/LOGO.png" class="ms-5" alt="">
-            <form action="" method="">
+            <form action="" id="login_form" method="POST">
               <div class="inputField" style="">
                 <span class="font">Email</span>
-                <input type="text" placeholder="" required />
+                <input type="text" name="email" placeholder="" required />
               </div>
               <div class="inputField">
                 <span class="font">Password</span>
-                <input type="password" placeholder="" required />
+                <input type="password" name="password" placeholder="" required />
               </div>
               
+  <span id="login_error" class="text-danger"></span>
               <button class="blackBtn ">Signin</button>
-
             </form>
           </div>
         </div>
       </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  $("#login_form").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: "/admin/login",
+      data: $("#login_form").serialize(),
+      method: "POST",
+      success: function (data) {
+      var now = new Date(); 
+        var time =now.getTime(); 
+        var expireTime =time+1000 * 60 * 60 * 24 * 30 ;
+        now.setTime(expireTime); 
+        document.cookie=`adminToken=${data};expires=${now.toUTCString()};path=/;`
+        location.href = "/admin"
+      },
+      error: function (err) {
+        //err = jQuery.parseJSON(err.responseText)
+        $("#login_error").text(err.responseJSON)
+      }
+    })
+  })
+</script>
+
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

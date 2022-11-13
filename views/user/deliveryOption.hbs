@@ -86,9 +86,7 @@
               <div  id="submit_btn_row">
                 <div class="d-flex">
                 <div class="col-md-6 mb-3">
-                <button type="submit" class="btn btn-primary" id="submit_button">Save & Continue</button>
               </div>
-              <div class="col-md-6 mb-3 "><button type="submit" class="btn btn-danger">Cancel</button></div>
               </div>
               </div>
               <div class="divider my-3 border-bottom border-secondary"></div>
@@ -101,6 +99,11 @@
                 <input required class="form-check-input" type="radio" name="payment_method" value="cash_on_delivery">
                 <label class="form-check-label" for="flexRadioDefault1">
                   Cash on Delivery
+                </label>
+                <br>
+                <input required class="form-check-input" type="radio" name="payment_method" value="wallet">
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Wallet
                 </label>
                 <br>
                 <input required class="form-check-input" type="radio" name="payment_method" value="razor_pay">
@@ -118,6 +121,7 @@
               </div>
 
               <div class="divider my-3 border-bottom border-secondary"></div>
+                <button type="submit" class="btn btn-primary" id="submit_button">Save & Continue</button>
 
             </div>
       </form>
@@ -286,6 +290,44 @@
         }
       }
     })
+  }
+   async function checkout() {
+    try{
+    let payment_method = $("#paymentMethodInp").val();
+    if(payment_method == "wallet") { 
+      let wallet = await validateWallet();
+    }
+    $.ajax({
+      url: '/checkout',
+      method: 'post',
+      data: $("#paymentForm").serialize(),
+      success: (response) => {
+        console.log("response is :  ", response);
+        if (response.method == "cod" || response.method == "wallet") {
+          Swal.fire("Hurray !", "Your order has been placed", "success").then((state) => {
+            state.isConfirmed ? location.href = '/' : null;
+          })
+        } else if (response.method == "paypal") {
+          Swal.fire("Hurray !", "Your order has been placed", "success").then((state) => {
+            state.isConfirmed ? location.href = '/' : null;
+          })
+        } else {
+          razorPayment(response.res);
+        }
+      },
+      error: function (error) {
+        err = jQuery.parseJSON(error.responseText);
+        if(error.status === 401 && err.error == "insufficient_wallet") {
+          Swal.fire("Oops !", err.message, "error").then((state) => {
+            state.isConfirmed ? location.href = '/' : null;
+          })
+        }else if (error.status == 401) {
+          location.href = '/error/bad_request'
+        }
+      }
+    })
+    } catch(err) {
+    }
   }
 </script>
 <script

@@ -40,6 +40,7 @@ const {
   postEditSavedAddress,
   getUserOrder,
   orderDetailsUser,
+  addToWallet,
 } = require("../helpers/user/placeholder");
 const { cart_model } = require("../models/cart_model");
 const { product_model } = require("../models/product_model");
@@ -49,17 +50,10 @@ const coupon = require("../helpers/admin/coupon");
 const { getBanner } = require("../helpers/admin/banner");
 const { wishlist_model } = require("../models/wishlist_model");
 const { CANCELLED } = require("dns");
+const { user_model } = require("../models/user_model");
 
 var router = express.Router();
 
-// const verifyLogin = (req, res, next) => {
-//   console.log(req.session.userId);
-//   if (req.session.userId) {
-//     next();
-//   } else {
-//     res.redirect("/home");
-//   }
-// };
 /* GET users listing. */
 router.get("/", verifyAccess, function (req, res, next) {
   res.render("user/userhome");
@@ -85,7 +79,6 @@ router.get("/home", (req, res) => {
 router.post('/address/add', async (req, res) => {
   let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
   req.body.userId = Types.ObjectId( user.userId);
-  console.log('data : ',req.body);
     await createSavedAddress(req.body).then(() => {
       res.status(200).json(true) 
     })
@@ -137,9 +130,7 @@ getwishlist(user.userId).then((data) => {
   })
 
   router.get('/wishlist/remove/:id',verifyLogin,(req,res)=>{
-    console.log("wish",req.params.id);
     let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
-    console.log(user);
     const id = req.params.id;
   wishlist_model.updateOne({userId:Types.ObjectId(user.userId)},
     {
@@ -147,7 +138,6 @@ getwishlist(user.userId).then((data) => {
         wishlistItems:Types.ObjectId(id)
       }
     }).then((data)=>{
-      console.log(data);
       res.redirect("/wishlist");
     })
   })
@@ -203,7 +193,6 @@ getwishlist(user.userId).then((wishlist) => {
 
 router.post("/cart/coupon",verifyLogin,async (req,res)=> {
   let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
-  console.log("dscdsc",req.body.code);
   let total= await getTotalAmount(user.userId) 
   validateCouponCode(req.body.code.toUpperCase()).then((data)=>{
     if(data){
@@ -215,7 +204,6 @@ router.post("/cart/coupon",verifyLogin,async (req,res)=> {
         })
       }}else{
       res.status(401).json("invalid coupon code")
-      console.log("invalid coupon");
     }
   })
 })
@@ -253,7 +241,7 @@ router.post("/cart/changeQuantity", (req, res) => {
 router.get('/orders',verifyLogin,(req,res)=>{
   let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
   orderDetailsUser(user.userId).then((data) => {
-  
+    console.log("data",data);
     res.render('user/orders',{
       user:user,
       data:data
@@ -266,7 +254,6 @@ router.get("/place-order", verifyLogin, (req, res) => {
   auth.getCart(user.userId).then((data) => {
     getSavedAddress(user.userId).then((address)=>{
     getTotalAmount(user.userId).then((total) => {
-      console.log('asdfasdfasdfsdf:',total)
       res.render("user/deliveryOption", {
         data: data,
         address:address,
@@ -281,10 +268,8 @@ router.get("/place-order", verifyLogin, (req, res) => {
 });
 router.post("/place-order", async (req, res) => {
       let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
-    console.log(req.body)
     let address = await getSavedAddressDetails(req.body.address)
     let order_address = await createOrderAddress(address[0], user.userId);
-    console.log("order_address",order_address)
     let Total = await getTotalAmount(user.userId);
     let usersData = await getOrderDetails(user.userId, req.body)
     orderCompleted(Total,usersData,user.userId,req.body,order_address._id).then((data)=>{
@@ -307,7 +292,6 @@ router.post("/place-order", async (req, res) => {
 });
 
 router.post('/verify-payment',(req,res)=>{
-  console.log(req.body)
   verifyPayment(req.body).then(()=>{
     changePaymentStatus(req.body['order[receipt]']).then(()=>{
       console.log('payment Success');
@@ -325,9 +309,7 @@ router.post("/api/orders", async (req, res) => {
     let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
     let total = await getTotalAmount(user.userId);
     total = (total.total / 80).toFixed(2)
-    console.log('total is ', total)
     const order = await paypal.createOrder(total);
-    console.log(order)
     res.status(200).json(order);
   } catch (err) {
     console.log(err.message)
@@ -356,8 +338,16 @@ router.get('/orders/cancel/:id',verifyLogin,(req,res)=>{
       orderStatus:'CANCELLED'
     }
   }).then((data)=>{
-    console.log("nnnn",data);
-    res.redirect("/orders");
+    order_model.find(
+      {_id:Types.ObjectId(req.params.id)}
+      
+    ).then(async(order)=>{
+       const amount=await order[0].totalAmount;
+      console.log("sdadasda",amount);
+      user_model.updateOne({_id:user.userId},{$inc:{wallet : amount}}).then((data) => {
+        res.redirect("/orders");
+    })
+    })
   })
 })
 
@@ -370,7 +360,6 @@ router.get('/address/add',(req,res)=>{
 router.get('/address',verifyLogin,(req,res)=>{
   let user = req.cookies.user ? JSON.parse(req.cookies.user) : null;
   getSavedAddress(user.userId).then((data)=>{
-    console.log(data);
   res.render("user/userAddress",{
     data:data,
     user:user,
@@ -390,7 +379,6 @@ router.get('/editAddress/:id',verifyLogin,(req,res)=>{
 router.post('/editAddress/:id',verifyLogin,(req,res)=>{
   let user =req.cookies.user ? JSON.parse(req.cookies.user) : null;
   postEditSavedAddress(req.params.id,req.body).then((result)=>{
-    console.log(result);
     res.redirect('/address')
   })
 })

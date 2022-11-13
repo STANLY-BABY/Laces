@@ -50,6 +50,9 @@ handlebars.registerHelper('times', function(from, n, block) {
   return accum;
 });
 
+handlebars.registerHelper('index_of', function(context,ndx,property) {
+  return context[ndx][property];
+});
 app.use('/admin', adminRouter);
 app.use('/', usersRouter);
 app.use('/auth', authRouter)

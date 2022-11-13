@@ -60,10 +60,10 @@
     <div class="drop-box-main">
 
       {{#times '1' '4'}}
-      <div class="d-flex">
+      <div class="d-flex drop-zone">
         <input required accept="image/*" type="file" class="w-100 p-1 m-1 form-control" name="image{{this}}"
           id="id_image{{this}}" />
-        <input type="button" value="Crop Image" class="btn btn-primary p-1 m-1" data-bs-toggle="modal"
+        <input type="button" value="Crop Image" class="drop-zone__input" data-bs-toggle="modal"
           data-bs-target="#modal{{this}}">
       </div>
       {{/times}}
@@ -98,8 +98,6 @@
 </div>
 {{/times}}
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
     </div>
   </div>

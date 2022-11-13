@@ -24,61 +24,67 @@ const { category_model } = require("../models/category_model");
 const coupons_model = require("../models/coupons_model");
 const order_model = require("../models/order_model");
 const { product_model } = require("../models/product_model");
+const { adminAuth } = require('../helpers/admin/adminAuth');
 var router = express.Router();
 
 /* GET home page. */
 
-router.get("/",async function(req, res, next) {
-  console.log("admin");
-let totalSales= await getTotalSales();
-let userCount=await getUserCount();
-let salesAmount=await getSalesAmount();
-// console.log("totals",salesAmount[0].total);
+
+router.get("/", adminAuth, async function(req, res, next) {
+  let totalSales= await getTotalSales();
+  let userCount=await getUserCount();
+  let salesAmount=await getSalesAmount();
+ 
   res.render("admin/adminhome", { admin: true,total:totalSales,user:userCount,totalamount:salesAmount[0]?.total});
 });
-router.post("/adminsignin", (req, res) => {
-  const adminName= req.body.adminName;
-  const admin={name:adminName}
-  const accessTokenAdmin= jwt.sign(admin,process.env.ACCEESS_TOKEN_ENV_ADMIN)
-  res.json({accessTokenAdmin:accessTokenAdmin})
+router.get("/login", (req, res) => {
+  console.log("dsfdfsdfs");
   res.render("admin/adminsignin");
+})
+router.post("/login", (req, res) => { 
+  console.log(req.body)
+  if(req.body.email === process.env.ADMIN_ID && req.body.password === process.env.ADMIN_PASS){
+    const accessTokenAdmin= jwt.sign({},process.env.ACCEESS_TOKEN_ENV_ADMIN)
+    console.log(accessTokenAdmin)
+    res.status(200).json(accessTokenAdmin)
+  } else {
+    res.status(401).json("❌Username or Password Wrong ❌")
+  }
 });
 
-function authenticateTokenAdmin(req,res,next) {
-  
-}
 
-router.get('/stats/day',(req,res)=>{
+router.get('/stats/day',adminAuth,(req,res)=>{
   getStatDay().then((graph)=>{
     res.status(200).json(graph)
   }) 
 })
-router.get('/stats/week',(req,res)=>{
+router.get('/stats/week',adminAuth,(req,res)=>{
   getStatWeekly().then((graph)=>{
     res.status(200).json(graph)
   })
 })
-router.get('/stats/month',(req,res)=>{
+router.get('/stats/month',adminAuth,(req,res)=>{
   getStatmonth().then((graph)=>{
     res.status(200).json(graph)
   })
 })
 
-router.get('/stats/sales',(req,res)=>{
+router.get('/stats/sales',adminAuth,(req,res)=>{
   getSalesMode().then((graph)=>{
     res.status(200).json(graph)
   })
 })
-router.get('/stats/saleStatus',(req,res)=>{
+router.get('/stats/saleStatus',adminAuth,(req,res)=>{
   getSalesStatus().then((graph)=>{
     res.status(200).json(graph)
   })
 })
 
 //home
-router.get("/home", (req, res, next) => {});
+// router.get("/home", (req, res, next) => {});
 //Admin Product Page
-router.get("/products", (req, res) => {
+router.get("/products",adminAuth, (req, res) => {
+
   getProducts().then((data) => {
     res.render("admin/adminviewproducts", {
       data: data,
@@ -87,13 +93,13 @@ router.get("/products", (req, res) => {
 });
 
 //addproduct
-router.get("/addproduct", (req, res, next) => {
+router.get("/addproduct",adminAuth, (req, res, next) => {
   category_model.find({}).lean().then((data)=>{
     
     res.render("admin/addproduct", { admin: true,data:data });
   })
 });
-router.post("/addproduct", (req, res) => {
+router.post("/addproduct",adminAuth, (req, res) => {
   const { Name, description, Price, brands, category, Stock,productDiscount,img_ext, } = req.body;
   category_model.findOne({category:category}).then((data)=> {
     const cDiscount = data.categoryDiscount;
@@ -130,7 +136,7 @@ router.post("/addproduct", (req, res) => {
     });
 });
 
-router.get("/products", async(req, res) => {
+router.get("/products",adminAuth, async(req, res) => {
   let category=await getAllCategories()
 
   getProducts().then((data) => {
@@ -144,20 +150,20 @@ router.get("/products", async(req, res) => {
 
 
 //delete product
-router.get("/deleteProduct/:id", (req, res) => {
+router.get("/deleteProduct/:id",adminAuth, (req, res) => {
 
   deleteproduct(req.params.id).then(() => {
     res.redirect("/admin/products");
   });
 });
 
-router.get("/editProduct/:id", (req, res) => {
+router.get("/editProduct/:id",adminAuth, (req, res) => {
   getProduct(req.params.id).then((product) => {
     res.render("admin/editproduct", { product: product });
   });
 });
 
-router.post("/editProduct/:id", (req, res) => {
+router.post("/editProduct/:id",adminAuth, (req, res) => {
   postEditProduct(req.params.id, req.body).then((result) => {
     if (result) {
       if (req.files) {
@@ -178,7 +184,7 @@ router.post("/editProduct/:id", (req, res) => {
   });
 });
 //category
-router.get('/Categories',(req,res,next)=>{
+router.get('/Categories',adminAuth,(req,res,next)=>{
   return new Promise((resolve,reject) => {
     category_model.find({}).lean().then((data) => {    
       res.render('admin/categories',{categories:data})
@@ -187,11 +193,11 @@ router.get('/Categories',(req,res,next)=>{
   })
 });
 
-router.get('/addCategory',(req,res)=>{
+router.get('/addCategory',adminAuth,(req,res)=>{
 
   res.render('admin/addCategory')
 })
-router.post('/addCategory',(req,res)=>{
+router.post('/addCategory',adminAuth,(req,res)=>{
   
   const {category,categoryDescription,categoryDiscount} = req.body;
   category_model
@@ -205,9 +211,8 @@ router.post('/addCategory',(req,res)=>{
       res.redirect("/admin/Categories")
     });
 });
-router.get("/deleteCategory/:id",(req,res) => {
+router.get("/deleteCategory/:id",adminAuth,(req,res) => {
 
-  // console.log(req.params.id);
   const id = req.params.id;
 
   category_model.deleteOne({_id:Types.ObjectId(id)}).then((data) => {
@@ -216,21 +221,15 @@ router.get("/deleteCategory/:id",(req,res) => {
   })
 });
 
-router.get("/editCategory/:id",(req,res) => {
+router.get("/editCategory/:id",adminAuth,(req,res) => {
 
    const id = req.params.id;
-
-  // console.log(id);
-
   category_model.find({_id:Types.ObjectId(id)}).lean().then((data) => {
-    //console.log("hiii",data)
     res.render("admin/editCategory",{data:data})
-
-
   })
 
 });
-router.post("/editCategory/:id",(req,res) => {
+router.post("/editCategory/:id",adminAuth,(req,res) => {
 
   const id = req.params.id;
   const { category,categoryDescription,categoryDiscount } = req.body;
@@ -244,10 +243,8 @@ router.post("/editCategory/:id",(req,res) => {
       }
     }).then(async(data) => {
       const products =await product_model.find({category:category})
-      // console.log("ksahksah",products);
       products.forEach(elements => {
         const finalPrice = Math.round(elements.price * (100-categoryDiscount)/100 *(100-elements.productDiscount)/100) 
-        console.log("dghfjagc",finalPrice);
         product_model.updateOne({_id:Types.ObjectId(elements._id)},
           {
             $set:{
@@ -263,7 +260,7 @@ router.post("/editCategory/:id",(req,res) => {
 
 
 
-router.get("/customers", (req, res) => {
+router.get("/customers",adminAuth, (req, res) => {
   return new Promise((resolve, reject) => {
     listUser({}).then((data) => {
       res.render("admin/customers",{data:data})
@@ -272,24 +269,24 @@ router.get("/customers", (req, res) => {
   });
 });
 
-router.get("/allowUser/:id", (req, res) => {
+router.get("/allowUser/:id",adminAuth, (req, res) => {
   allowedUser(req.params.id).then(() => {
     res.redirect("/admin/customers");
   });
 });
 
-router.get("/deleteUser/:id", (req, res) => {
+router.get("/deleteUser/:id",adminAuth, (req, res) => {
   deleteUser(req.params.id).then(() => {
     res.redirect("/admin/customers");
   });
 });
 
-router.get('/orders',(req,res)=>{
+router.get('/orders',adminAuth,(req,res)=>{
   order_model.find({}).lean().then((data)=>{
     res.render('admin/orders',{data:data})
   })
 })
-router.get('/orderdetails/:id',(req,res)=>{
+router.get('/orderdetails/:id',adminAuth,(req,res)=>{
   orderDetailsAdmin(req.params.id).then((data)=>{
     res.render('admin/orderdetails',{
       data:data[0],
@@ -297,17 +294,17 @@ router.get('/orderdetails/:id',(req,res)=>{
   })
 })
 
-router.get('/coupons',(req,res)=>{
+router.get('/coupons',adminAuth,(req,res)=>{
   coupons_model.find({}).lean().then((data)=>{
     res.render('admin/coupons',{data:data})
   })
 })
 
-router.get('/addCoupons',(req,res)=>{
+router.get('/addCoupons',adminAuth,(req,res)=>{
   res.render('admin/addCoupons')
 })
 
-router.post('/addCoupons',(req,res)=>{
+router.post('/addCoupons',adminAuth,(req,res)=>{
   const {couponName,couponDesc,couponCode,couponDiscount,minAmount} = req.body;
   coupons_model
     .create({
@@ -322,8 +319,7 @@ router.post('/addCoupons',(req,res)=>{
     });
 });
 
-router.get("/deleteCoupons/:id",(req,res) => {
-  // console.log(req.params.id);
+router.get("/deleteCoupons/:id",adminAuth,(req,res) => {
   const id = req.params.id;
   coupons_model.deleteOne({_id:Types.ObjectId(id)}).then((data) => {
     res.redirect("/admin/coupons")
@@ -332,25 +328,23 @@ router.get("/deleteCoupons/:id",(req,res) => {
 
 
 
-router.post("/order/changeStatus", (req, res) => {
-  console.log("asdfasdfasdf", req.body.orderId, req.body.status)
+router.post("/order/changeStatus",adminAuth, (req, res) => {
   order_model.updateOne({_id : req.body.orderId},{$set: {orderStatus : req.body.status}}).then((data) => {
-    console.log(data)
      res.status(200).json(true)
   })
 })
 
-router.get('/banner',(req,res)=>{
+router.get('/banner',adminAuth,(req,res)=>{
   banner_model.find({isDelete:"false"}).lean().then((data)=>{
     res.render('admin/banner',{data:data})
   })
 })
 
-router.get('/addBanner',(req,res)=>{
+router.get('/addBanner',adminAuth,(req,res)=>{
   res.render('admin/addBanner')
 })
 
-router.post('/addBanner',(req,res)=>{
+router.post('/addBanner',adminAuth,(req,res)=>{
   const {bannerNo,isDelete} = req.body;
   banner_model
     .create({
@@ -366,12 +360,17 @@ router.post('/addBanner',(req,res)=>{
 });
     });
 
-    router.get("/deleteBanner/:id", (req, res) => {
+    router.get("/deleteBanner/:id",adminAuth, (req, res) => {
 
       deleteBanner(req.params.id).then(() => {
         res.redirect("/admin/banner");
       });
     });
+router.get('/sales',adminAuth,(req,res)=>{
+  order_model.find({orderStatus: { $ne: "CANCELLED" } }).lean().then((data)=>{
+  res.render('admin/sales',{data:data})
+  })
+})
 
 module.exports = router;
 

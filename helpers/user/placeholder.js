@@ -103,7 +103,8 @@ orderDetailsUser:(userId)=>{
           foreignField:"_id",
           as:"orderProduct"
         },
-      }
+      },
+      { $sort: { date: -1 } },
      
     ]).then((data)=>{
       resolve(data)
